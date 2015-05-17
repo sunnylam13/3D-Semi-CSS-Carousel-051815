@@ -4,6 +4,8 @@
 
 // These are variables I want access to throughout the project code
 
-
+$carouselPerspective: 200px;
+// the z-offset needs to increase as the number of items increases... you'd have to write Javascript to handle this... for every 9 items past 9, z-offset should increase by -1000px above -1000px
+$transOriginZOffset1: -3000px;
 
 ///////////////////////////////////////////////

@@ -18,6 +18,7 @@ tdCG1.netDegrees = 360;
 tdCG1.spinner = $('#spinner');
 tdCG1.leftPrev = $('span[data-dir1="left"]');
 tdCG1.rightNext = $('span[data-dir1="right"]');
+tdCG1.figSpinner = $('figure#spinner');
 // tdCG1.items1 holds the items in the gallery... whether they're images or a div
 tdCG1.items1 = $('figure#spinner img');
 
@@ -33,6 +34,49 @@ tdCG1.items1 = $('figure#spinner img');
 
 // NOTE:  in terms of organization, Ryan prefers to put all other functions and variables above the object.init() method however in reality it doesn't matter
 
+tdCG1.tOriginChanger = function () {
+	// Sunday, May 17, 2015 11:44 AM:  currently not working
+
+	// when figure#spinner changes
+	tdCG1.figSpinner.on('change', function(e) {
+		e.preventDefault();
+
+		// two areas need changing
+		// figure out how many img items we have
+		var imgTotal = tdCG1.items1.length;
+		// get the current transform value
+		var transOValue = tdCG1.figSpinner.css('transform-origin');
+		var increment = 1000;
+		var newTOriginValue = "";
+		
+		// figure#spinner
+		if (imgTotal > 9) {
+			var incrementUnits = Math.floor(imgTotal/9);
+			var newZOffset = -1*(incrementUnits*increment);
+			newTOriginValue = "50% 50%" + " " + newZOffset;
+			console.log(newTOriginValue);
+			tdCG1.figSpinner.css('transform-origin', newTOriginValue);
+		}
+
+		// // figure#spinner img
+		// $.each(tdCG1.items1, function(index, imgItem) {
+		// 	var $finalTarget = $(imgItem);
+		// 	$finalTarget.css('transform-origin', newTOriginValue);
+		// });
+	});
+
+
+	tdCG1.figSpinner.on('change', tdCG1.items1, function(e) {
+		e.preventDefault();
+		// figure#spinner img
+		$.each($(this), function(index, imgItem) {
+			var $finalTarget = $(imgItem);
+			$finalTarget.css('transform-origin', newTOriginValue);
+		});
+	});
+	
+}
+
 tdCG1.craftRotateString = function (axisString,angleValue) {
 	var string = "rotate" + axisString + "(";
 		string += angleValue;
@@ -45,6 +89,7 @@ tdCG1.itemAngles = function () {
 
 	var totalItems = tdCG1.items1.length;
 	// may want to floor the value so you avoid decimals
+	// perhaps allowing decimal places will avoid the images cutting each other on the left/right sides... nope, they still cross each other
 	// var degreeItem = tdCG1.netDegrees/totalItems;
 	var degreeItem = Math.floor(tdCG1.netDegrees/totalItems);
 	tdCG1.degreeConstant = degreeItem;
@@ -120,6 +165,8 @@ tdCG1.galleryspin = function (dirString) {
 tdCG1.events = function () {
 	
 	tdCG1.itemAngles();
+
+	tdCG1.tOriginChanger();
 
 	$(tdCG1.leftPrev).on('click', function(e) {
 		e.preventDefault();

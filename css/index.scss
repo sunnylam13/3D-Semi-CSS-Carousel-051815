@@ -5,7 +5,7 @@
 
 div#carousel {
 	/* need to set a perspective on the parent of all elements and children here */
-	perspective: 200px;
+	perspective: $carouselPerspective;
 	background: #100000;
 	padding-top: 20%;
 	font-size: 0;
@@ -46,7 +46,7 @@ figure#spinner {
 	height: 300px;
 	/*change the origin for the animation... The transform-origin CSS property lets you modify the origin for transformations of an element.  A -ve z-offset means into the page usually unless the element has already been rotated, while +ve means towards the user's eye. */
 	/*the z-offset of the figure#spinner must match those of the img's within it*/
-	transform-origin: 50% 50% -2000px;
+	transform-origin: 50% 50% $transOriginZOffset1;
 	transition: 1s;
 
 	/* change the plane of view so it seems like you're looking partially from the top at an angle... you must also add this to your Javascript otherwise it will be overwritten...
@@ -70,7 +70,7 @@ figure#spinner img {
 	max-width: 425px;
 	position: absolute;
 	left: 30%;
-	transform-origin: 50% 50% -2000px;
+	transform-origin: 50% 50% $transOriginZOffset1;
 	outline: 1px solid transparent;
 }
 
